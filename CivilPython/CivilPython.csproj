@@ -1,0 +1,109 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <RootNamespace>CivilPython</RootNamespace>
+    <TargetFramework>net8-windows</TargetFramework>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <Configurations>Debug;Release;2023;2024;2025</Configurations>
+	  
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2023|AnyCPU'">
+		<DefineConstants>C2023</DefineConstants>
+		<OutputPath>bin\2023\</OutputPath>
+		<AssemblyName>CivilPython2023</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2024|AnyCPU'">
+		<DefineConstants>C2024</DefineConstants>
+		<OutputPath>bin\2024\</OutputPath>
+		<AssemblyName>CivilPython2024</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">
+		<DefineConstants>C2025</DefineConstants>
+		<OutputPath>bin\2025\</OutputPath>
+		<AssemblyName>CivilPython2025</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>Debug</DefineConstants>
+		<OutputPath>bin\2023\</OutputPath>
+		<AssemblyName>CivilPython2023</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>Release</DefineConstants>
+		<OutputPath>bin\2023\</OutputPath>
+		<AssemblyName>CivilPython2023</AssemblyName>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2023|AnyCPU'">2023</C3DVersion>
+		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2024|AnyCPU'">2024</C3DVersion>
+		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">2025</C3DVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="DynamicLanguageRuntime" Version="1.3.4" />
+	  <PackageReference Include="IronPython" Version="3.4.1" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Acdbmgd">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+	  <Reference Include="acdbmgdbrep">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\acdbmgdbrep.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+    <Reference Include="Acmgd">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+	  <Reference Include="AdWindows">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\AdWindows.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+    <Reference Include="AecBaseMgd">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\ACA\AecBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\C3D\AeccDbMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+	  <Reference Include="AeccPressurePipesMgd">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\C3D\AeccPressurePipesMgd.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="AecPropDataMgd">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\ACA\AecPropDataMgd.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="Autodesk.Map.Platform">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\Autodesk.Map.Platform.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="Autodesk.Map.Platform.Utils">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\Autodesk.Map.Platform.Utils.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="OSGeo.MapGuide.Foundation">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="OSGeo.MapGuide.Geometry">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
+	  <Reference Include="OSGeo.MapGuide.PlatformBase">
+		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>	  
+  </ItemGroup>
+
+</Project>
