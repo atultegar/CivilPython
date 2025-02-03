@@ -21,7 +21,11 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.DatabaseServices;
 using System.Xml;
 using System.IO;
-
+using Autodesk.Aec.PropertyData.DatabaseServices;
+using System.ComponentModel;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using System.Windows.Controls;
 namespace CivilPython
 {
     public class CivilPython
@@ -1344,5 +1348,194 @@ namespace CivilPython
 
             xmlDoc.Save(path);
         }
-    }
+
+        [CommandMethod("-CreatePropertySetDefinition")]
+        public void CreatePropertySetDefinition()
+        {
+            Document doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Database acDBase = doc.Database;
+            Editor ed = doc.Editor;
+
+            string xmlPath = "";
+            try
+            {
+                PromptStringOptions pso = new PromptStringOptions("\nEnter PropertySetDefinition file path.");
+                PromptResult resPath = doc.Editor.GetString(pso);
+                xmlPath = resPath.StringResult;
+            }
+            catch { }            
+
+            if (File.Exists(xmlPath)) 
+            {
+                XDocument xmlDoc = XDocument.Load(xmlPath);
+
+                // Get the PropertSetDefinition Name
+                string psdName = xmlDoc.Root.Element("Name").Value;
+
+                // Get all properties
+                var properties = xmlDoc.Descendants("PropertyDefinition")
+                    .Select(p => new
+                    {
+                        Name = p.Element("Name")?.Value,
+                        Description = p.Element("Description")?.Value,
+                        DataType = p.Element("DataType")?.Value,
+                        MappedType = GetMappedType(p.Element("DataType")?.Value)
+                    });
+
+                using (var propDic = new DictionaryPropertySetDefinitions(acDBase))
+                {
+                    var usedNames = propDic.NamesInUse;
+
+                    if (!usedNames.Contains(psdName))
+                    {
+                        using (Transaction trans = acDBase.TransactionManager.StartTransaction())
+                        {
+                            try
+                            {
+                                var propSetDef = new PropertySetDefinition();
+                                propSetDef.AppliesToAll = true;
+
+                                foreach (var prop in properties) 
+                                {
+                                    var propDef = new PropertyDefinition();
+                                    propDef.Name = prop.Name;
+                                    propDef.Description = prop.Description;
+                                    propDef.DataType = prop.MappedType;
+                                    propSetDef.Definitions.Add(propDef);
+                                }
+                                propDic.AddNewRecord(psdName, propSetDef);
+                                trans.AddNewlyCreatedDBObject(propSetDef, true);
+                                ed.WriteMessage($"\nPropertySetDefinition: {psdName} added successfully");
+
+                            }
+                            catch (System.Exception ex) 
+                            {
+                                ed.WriteMessage($"\nError: {ex.Message}");
+                            }
+                            finally
+                            {
+                                trans.Commit();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ed.WriteMessage($"PropertySetDefinition: {psdName} already defined in the document.");
+                    }                    
+                }
+            }
+            else
+            {
+                ed.WriteMessage($"Error: File not found!");
+            }
+        }
+
+        [CommandMethod("-AssignPropertySet")]
+        public void AssignPropertySet()
+        {
+            Document doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;            
+            Database acDBase = doc.Database;
+            Editor ed = doc.Editor;
+            string psdName = "";
+            string xmlPath = "";
+            try
+            {
+                PromptStringOptions pso1 = new PromptStringOptions("\nEnter PropertySetDefinition Name");
+                PromptResult resPsdName = doc.Editor.GetString(pso1);
+                psdName = resPsdName.StringResult;
+                PromptStringOptions pso2 = new PromptStringOptions("\nEnter path of xml file");
+                PromptResult resXml = doc.Editor.GetString(pso2);
+                xmlPath = resXml.StringResult;
+            }
+            catch { }
+
+            var propDic = new DictionaryPropertySetDefinitions(acDBase);
+            if (propDic.NamesInUse.Contains(psdName) && File.Exists(xmlPath))
+            {
+                var psdId = propDic.GetAt(psdName);
+
+                XDocument xmlDoc = XDocument.Load(xmlPath);
+                var objects = ParseObjectXml(xmlDoc);
+
+                using (var trans = acDBase.TransactionManager.StartTransaction())
+                {
+                    List<ObjectId> objectIds = new List<ObjectId>();
+
+                    try
+                    {
+                        foreach (var (handle, properties) in objects)
+                        {
+                            ObjectId objectId = ObjectId.Null;
+
+                            objectId = acDBase.GetObjectId(false, new Handle(Convert.ToInt64(handle, 16)), 0);
+                            var dbObj = trans.GetObject(objectId, OpenMode.ForWrite);
+                            PropertyDataServices.AddPropertySet(dbObj, psdId);
+                            ed.WriteMessage("\nProperty Set added successfully");
+
+                            var psetId = PropertyDataServices.GetPropertySet(dbObj, psdId);
+
+                            var pset = (PropertySet)trans.GetObject(psetId, OpenMode.ForWrite);
+                            
+                            foreach (var prop in properties)
+                            {
+                                var pid1 = pset.PropertyNameToId(prop.Key);
+                                pset.SetAt(pid1, prop.Value);
+                            }
+
+                        }
+                        ed.WriteMessage($"\nProperties updated...");
+                    }
+                    catch (System.Exception ex) 
+                    {
+                        ed.WriteMessage($"Error: {ex.Message}");
+                    }
+                    finally
+                    {
+                        trans.Commit();
+                    }
+                }
+            }
+            else
+            {
+                ed.WriteMessage($"PropertySetDefinition: {psdName} not found");
+            }            
+            
+        }
+
+        private static Autodesk.Aec.PropertyData.DataType GetMappedType(string type)
+        {
+            switch (type.ToLower())
+            {
+                case "string":
+                    return Autodesk.Aec.PropertyData.DataType.Text;
+                case "integer":
+                    return Autodesk.Aec.PropertyData.DataType.Integer;
+                case "double":
+                    return Autodesk.Aec.PropertyData.DataType.Real;
+                case "bool":
+                    return Autodesk.Aec.PropertyData.DataType.TrueFalse;
+                default:
+                    return Autodesk.Aec.PropertyData.DataType.Text;
+            }
+        }
+
+        private static List<(string Handle, Dictionary<string, string> Properties)> ParseObjectXml(XDocument xmlDoc)
+        {
+            var objects = xmlDoc.Root
+                .Elements("Object")
+                .Select(x =>
+                {
+                    // Extract the Handle attribute
+                    var handle = x.Attribute("Handle")?.Value;
+
+                    // Create dictionary for all other properties
+                    var properties = x.Elements()
+                    .ToDictionary(e => e.Name.LocalName, e => e.Value);
+
+                    return (Handle: handle, Properties: properties);
+                })
+                .ToList();
+            return objects;
+        }
+    }    
 }

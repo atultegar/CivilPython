@@ -4,8 +4,8 @@
                     ProductType="Application"
                     Name="CivilPython2025">
 	<CompanyDetails Name="" Phone=" " Url="" Email="" />
-	<RuntimeRequirements SeriesMax="R26.0"
-						 SeriesMin="R20.1"
+	<RuntimeRequirements SeriesMax="R25.0"
+						 SeriesMin="R25.0"
 						 Platform="Civil3D"
 						 OS="Win64" />
 	<Components>

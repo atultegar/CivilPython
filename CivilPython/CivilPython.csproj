@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <RootNamespace>CivilPython</RootNamespace>
-    <TargetFramework>net8-windows</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
 	  <UseWindowsForms>true</UseWindowsForms>
 	  <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <Configurations>Debug;Release;2023;2024;2025</Configurations>
 	  
@@ -14,16 +13,33 @@
 		<DefineConstants>C2023</DefineConstants>
 		<OutputPath>bin\2023\</OutputPath>
 		<AssemblyName>CivilPython2023</AssemblyName>
+		<PostBuildEvent>
+			xcopy /Y /F "$(OutputDir)CivilPython2023.dll" "$(MSBuildProjectDirectory)\CivilPython2023.bundle\Contents\win\"
+			del /F "$(MSBuildProjectDirectory)\bundles\CivilPython2023.zip"
+			"C:\Program Files\7-Zip\7z.exe" a -tzip "$(MSBuildProjectDirectory)/bundles/CivilPython2023.zip" "$(MSBuildProjectDirectory)\CivilPython2023.bundle\" -xr0!*.pdb
+		</PostBuildEvent>
+		<!--<PostBuildEvent>ECHO "$(MSBuildProjectDirectory)"</PostBuildEvent>-->
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2024|AnyCPU'">
 		<DefineConstants>C2024</DefineConstants>
 		<OutputPath>bin\2024\</OutputPath>
 		<AssemblyName>CivilPython2024</AssemblyName>
+		<PostBuildEvent>
+			xcopy /Y /F "$(OutputDir)CivilPython2024.dll" "$(MSBuildProjectDirectory)\CivilPython2024.bundle\Contents\win\"
+			del /F "$(MSBuildProjectDirectory)\bundles\CivilPython2024.zip"
+			"C:\Program Files\7-Zip\7z.exe" a -tzip "$(MSBuildProjectDirectory)/bundles/CivilPython2024.zip" "$(MSBuildProjectDirectory)\CivilPython2024.bundle\" -xr0!*.pdb
+		</PostBuildEvent>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">
 		<DefineConstants>C2025</DefineConstants>
 		<OutputPath>bin\2025\</OutputPath>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<AssemblyName>CivilPython2025</AssemblyName>
+		<PostBuildEvent>
+			xcopy /Y /F "$(OutputDir)CivilPython2025.dll" "$(MSBuildProjectDirectory)\CivilPython2025.bundle\Contents\win\"
+			del /F "$(MSBuildProjectDirectory)\bundles\CivilPython2025.zip"
+			"C:\Program Files\7-Zip\7z.exe" a -tzip "$(MSBuildProjectDirectory)/bundles/CivilPython2025.zip" "$(MSBuildProjectDirectory)\CivilPython2025.bundle\" -xr0!*.pdb
+		</PostBuildEvent>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>Debug</DefineConstants>
@@ -104,6 +120,10 @@
 		  <HintPath>C:\Program Files\Autodesk\AutoCAD $(C3DVersion)\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
 		  <Private>False</Private>
 	  </Reference>	  
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CivilPython2023.bundle\Contents\win\" />
   </ItemGroup>
 
 </Project>

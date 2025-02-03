@@ -2,16 +2,16 @@
 <ApplicationPackage SchemaVersion="1.0"
                     AutodeskProduct="AutoCAD"
                     ProductType="Application"
-                    Name="CivilPython2025">
+                    Name="CivilPython2023">
 	<CompanyDetails Name="" Phone=" " Url="" Email="" />
-	<RuntimeRequirements SeriesMax="R26.0"
-						 SeriesMin="R20.1"
+	<RuntimeRequirements SeriesMax="R24.2"
+						 SeriesMin="R24.2"
 						 Platform="Civil3D"
 						 OS="Win64" />
 	<Components>
-		<ComponentEntry AppName="CivilPython2025"
+		<ComponentEntry AppName="CivilPython2023"
 						Version="2.2"
-						ModuleName="./Contents/Win/CivilPython2025.dll"
+						ModuleName="./Contents/Win/CivilPython2023.dll"
 						AppDescription="Description for command module of CivilPython"
 						LoadOnCommandInvocation="True" LoadOnRequest="True">
 			<Commands>
