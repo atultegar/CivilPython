@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationPackage SchemaVersion="1.0"
+                    AutodeskProduct="AutoCAD"
+                    ProductType="Application"
+                    Name="CivilPython2026">
+	<CompanyDetails Name="" Phone=" " Url="" Email="" />
+	<RuntimeRequirements SeriesMax="R25.1"
+						 SeriesMin="R25.1"
+						 Platform="Civil3D"
+						 OS="Win64" />
+	<Components>
+		<ComponentEntry AppName="CivilPython2026"
+						Version="2.3"
+						ModuleName="./Contents/Win/CivilPython2026.dll"
+						AppDescription="Description for command module of CivilPython"
+						LoadOnCommandInvocation="True" LoadOnRequest="True">
+			<Commands>
+				<Command Local="Python" Global="Python" />
+				<Command Local="-python" Global="-python" />
+				<Command Local="-replacesolid" Global="-replacesolid" />
+				<Command Local="-ExportLandFeatureLinesToXml" Global="-ExportLandFeatureLinesToXml" />
+				<Command Local="-ExportCorridorFeatureLinesToXML" Global="-ExportCorridorFeatureLinesToXML" />
+				<Command Local="-ExportSubassemblyShapesToXML" Global="-ExportSubassemblyShapesToXML" />
+				<Command Local="-ExportSubassemblyLinksToXML" Global="-ExportSubassemblyLinksToXML" />
+				<Command Local="-CreatePropertySetDefinition" Global="-CreatePropertySetDefinition" />
+			</Commands>
+		</ComponentEntry>
+	</Components>
+</ApplicationPackage>

@@ -5,7 +5,7 @@
 	  <UseWindowsForms>true</UseWindowsForms>
 	  <UseWPF>true</UseWPF>
     <PlatformTarget>x64</PlatformTarget>
-    <Configurations>Debug;Release;2023;2024;2025</Configurations>
+    <Configurations>Debug;Release;2023;2024;2025;2026</Configurations>
 	  
   </PropertyGroup>
 
@@ -41,6 +41,17 @@
 			"C:\Program Files\7-Zip\7z.exe" a -tzip "$(MSBuildProjectDirectory)/bundles/CivilPython2025.zip" "$(MSBuildProjectDirectory)\CivilPython2025.bundle\" -xr0!*.pdb
 		</PostBuildEvent>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2026|AnyCPU'">
+	  <DefineConstants>C2026</DefineConstants>
+	  <OutputPath>bin\2026\</OutputPath>
+	  <TargetFramework>net8.0-windows</TargetFramework>
+	  <AssemblyName>CivilPython2026</AssemblyName>
+	  <PostBuildEvent>
+			xcopy /Y /F "$(OutputDir)CivilPython2026.dll" "$(MSBuildProjectDirectory)\CivilPython2026.bundle\Contents\win\"
+			del /F "$(MSBuildProjectDirectory)\bundles\CivilPython2026.zip"
+			"C:\Program Files\7-Zip\7z.exe" a -tzip "$(MSBuildProjectDirectory)/bundles/CivilPython2026.zip" "$(MSBuildProjectDirectory)\CivilPython2026.bundle\" -xr0!*.pdb
+		</PostBuildEvent>
+	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>Debug</DefineConstants>
 		<OutputPath>bin\2023\</OutputPath>
@@ -56,6 +67,7 @@
 		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2023|AnyCPU'">2023</C3DVersion>
 		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2024|AnyCPU'">2024</C3DVersion>
 		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">2025</C3DVersion>
+		<C3DVersion Condition="'$(Configuration)|$(Platform)'=='2026|AnyCPU'">2026</C3DVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
