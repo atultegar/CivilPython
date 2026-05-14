@@ -12,6 +12,7 @@
 		<ComponentEntry AppName="CivilPython2025"
 						Version="2.2"
 						ModuleName="./Contents/Win/CivilPython2025.dll"
+						LoadOnAutoCADStartup="True"
 						AppDescription="Description for command module of CivilPython"
 						LoadOnCommandInvocation="True" LoadOnRequest="True">
 			<Commands>
