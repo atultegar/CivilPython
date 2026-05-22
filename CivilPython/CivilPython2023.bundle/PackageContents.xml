@@ -1,30 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ApplicationPackage SchemaVersion="1.0"
-                    AutodeskProduct="AutoCAD"
-                    ProductType="Application"
-                    Name="CivilPython2023">
-	<CompanyDetails Name="" Phone=" " Url="" Email="" />
-	<RuntimeRequirements SeriesMax="R24.2"
-						 SeriesMin="R24.2"
-						 Platform="Civil3D"
-						 OS="Win64" />
+
+<ApplicationPackage
+	SchemaVersion="1.0"
+	AutodeskProduct="AutoCAD"
+	ProductType="Application"
+	Name="CivilPython2023"
+	AppVersion="2.3"
+	ProductCode="c91b294e-fcdf-4b49-a1e6-f7a4472666ef"
+	UpgradeCode="f3eb1ecd-2b78-483f-8352-dafeb0a3afc5">	
+	
+	<CompanyDetails 
+		Name="" 
+		Phone=" " 
+		Url="" 
+		Email="" />
+	
+	<RuntimeRequirements
+		SeriesMin="R24.2"
+		SeriesMax="R24.2"
+		Platform="Civil3D"
+		OS="Win64" />
+		
 	<Components>
-		<ComponentEntry AppName="CivilPython2023"
-						Version="2.2"
-						ModuleName="./Contents/Win/CivilPython2023.dll"
-						LoadOnAutoCADStartup="True"
-						AppDescription="Description for command module of CivilPython"
-						LoadOnCommandInvocation="True" LoadOnRequest="True">
+		<ComponentEntry 
+			AppName="CivilPython2023"
+			Version="2.3"
+			ModuleName="./Contents/win/CivilPython2023.dll"
+			AppDescription="CivilPython for Civil 3D"
+			LoadOnCommandInvocation="True" 
+			LoadOnRequest="True">
+			
 			<Commands>
-				<Command Local="Python" Global="Python" />
-				<Command Local="-python" Global="-python" />
-				<Command Local="-replacesolid" Global="-replacesolid" />
-				<Command Local="-ExportLandFeatureLinesToXml" Global="-ExportLandFeatureLinesToXml" />
-				<Command Local="-ExportCorridorFeatureLinesToXML" Global="-ExportCorridorFeatureLinesToXML" />
-				<Command Local="-ExportSubassemblyShapesToXML" Global="-ExportSubassemblyShapesToXML" />
-				<Command Local="-ExportSubassemblyLinksToXML" Global="-ExportSubassemblyLinksToXML" />
-				<Command Local="-CreatePropertySetDefinition" Global="-CreatePropertySetDefinition" />
-			</Commands>
+<Command Local="Python" Global="Python" />
+<Command Local="-python" Global="-python" />
+<Command Local="-replacesolid" Global="-replacesolid" />
+<Command Local="-ExportLandFeatureLinesToXml" Global="-ExportLandFeatureLinesToXml" />
+<Command Local="-ExportCorridorFeatureLinesToXML" Global="-ExportCorridorFeatureLinesToXML" />
+<Command Local="-ExportSubassemblyShapesToXML" Global="-ExportSubassemblyShapesToXML" />
+<Command Local="-ExportSubassemblyLinksToXML" Global="-ExportSubassemblyLinksToXML" />
+<Command Local="-CreatePropertySetDefinition" Global="-CreatePropertySetDefinition" />
+</Commands>
+
+			
 		</ComponentEntry>
+		
 	</Components>
+	
 </ApplicationPackage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ApplicationPackage
+	SchemaVersion="1.0"
+	AutodeskProduct="AutoCAD"
+	ProductType="Application"
+	Name="$(BundleName)"
+	AppVersion="$(AppVersion)"
+	ProductCode="$(ProductCode)"
+	UpgradeCode="$(UpgradeCode)">	
+	
+	<CompanyDetails 
+		Name="" 
+		Phone=" " 
+		Url="" 
+		Email="" />
+	
+	<RuntimeRequirements
+		SeriesMin="$(Series)"
+		SeriesMax="$(Series)"
+		Platform="Civil3D"
+		OS="Win64" />
+		
+	<Components>
+		<ComponentEntry 
+			AppName="$(BundleName)"
+			Version="$(AppVersion)"
+			ModuleName="./Contents/win/$(AssemblyName).dll"
+			AppDescription="CivilPython for Civil 3D"
+			LoadOnCommandInvocation="True" 
+			LoadOnRequest="True">
+			
+			$(Commands)
+			
+		</ComponentEntry>
+		
+	</Components>
+	
+</ApplicationPackage>
