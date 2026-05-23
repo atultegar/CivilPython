@@ -56,7 +56,10 @@ namespace CivilPython.Installer
                 "-ExportCorridorFeatureLinesToXML",
                 "-ExportSubassemblyShapesToXML",
                 "-ExportSubassemblyLinksToXML",
-                "-CreatePropertySetDefinition"
+                "-ExportSurfaceToXML",
+                "-ExportSurfaceTrianglesToXML",
+                "-CreatePropertySetDefinition",
+                "-AssignPropertySet"
             };
 
             var sb = new StringBuilder();
