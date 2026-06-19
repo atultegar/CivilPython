@@ -22,7 +22,7 @@ namespace CivilPython.Installer
                 version,
                 guids.ProductGuid.ToString(),
                 guids.UpgradeGuid.ToString(),
-                appVersion: "2.3.1");
+                appVersion: "2.3.3");
 
             string appDataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
@@ -58,7 +58,7 @@ namespace CivilPython.Installer
 
             project.ControlPanelInfo.Manufacturer = "Autodesk/BIMformative";
 
-            project.Version = new Version("2.3.1");
+            project.Version = new Version("2.3.3");
 
             project.MajorUpgrade = MajorUpgrade.Default;
 

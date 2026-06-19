@@ -1,5 +1,8 @@
-﻿// Copyright (c) 2024 Autodesk, Inc. All rights reserved.
-// Author: paolo.serra@autodesk.com, atul.tegar@gmail.com
+﻿// Copyright (c) 2024 Autodesk, Inc.
+// Copyright (c) 2026 Atul Tegar
+//
+// Original Author: paolo.serra@autodesk.com
+// Maintained and extended by: atul.tegar@gmail.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -11,6 +14,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 // implied.  See the License for the specific language governing
 // permissions and limitations under the License.
+
 using Autodesk.AutoCAD.Runtime;
 using System;
 using System.Collections.Generic;
@@ -22,10 +26,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using System.Xml;
 using System.IO;
 using Autodesk.Aec.PropertyData.DatabaseServices;
-using System.ComponentModel;
-using System.Xml.Serialization;
 using System.Xml.Linq;
-using System.Windows.Controls;
 namespace CivilPython
 {
     public class CivilPython
@@ -1502,6 +1503,66 @@ namespace CivilPython
             
         }
 
+        [CommandMethod("-BindAllInsert")]
+        public void BindAllInsert()
+        {
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            Database db = doc.Database;
+
+            using (Transaction tr = db.TransactionManager.StartTransaction())
+            {
+                ObjectIdCollection xrefIds = new ObjectIdCollection();
+                BlockTable bt = (BlockTable)db.BlockTableId.GetObject(OpenMode.ForRead);
+
+                foreach (ObjectId id in bt)
+                {
+                    BlockTableRecord btr = (BlockTableRecord)id.GetObject(OpenMode.ForRead);
+                    if (btr.XrefStatus == XrefStatus.Resolved)
+                    {
+                        xrefIds.Add(id);
+                    }
+                }
+
+                db.BindXrefs(xrefIds, true);
+
+                tr.Commit();
+            }
+        }
+
+        [CommandMethod("-CreateTinSurface")]
+        public void CreateTinSurface()
+        {
+            var civilDoc = CivilApplication.ActiveDocument;
+            var acadDoc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            var db = acadDoc.Database;
+
+            Editor ed = acadDoc.Editor;
+            string surfaceName = "";
+            try
+            {
+                PromptStringOptions pso1 = new PromptStringOptions("\nEnter Surface Name");
+                PromptResult resPsdName = acadDoc.Editor.GetString(pso1);
+                surfaceName = resPsdName.StringResult;
+
+                using (var tr = db.TransactionManager.StartTransaction())
+                {
+                    ObjectId styleId = civilDoc.Styles.SurfaceStyles[0];
+
+                    ObjectId surfaceId = Autodesk.Civil.DatabaseServices.TinSurface.Create(surfaceName, styleId);
+
+                    var surface = (Autodesk.Civil.DatabaseServices.TinSurface)surfaceId.GetObject(OpenMode.ForRead);
+
+                    WriteToFile(surface.Handle.ToString(), $"{surface.Name}.txt");
+
+                    tr.Commit();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                WriteToFile(ex.Message, "CreateTinSurface_Error.txt");
+            }            
+        }
+
         private static Autodesk.Aec.PropertyData.DataType GetMappedType(string type)
         {
             switch (type.ToLower())
@@ -1536,6 +1597,13 @@ namespace CivilPython
                 })
                 .ToList();
             return objects;
+        }
+
+        private static void WriteToFile(string text, string fileName)
+        {
+            string path = Path.Combine(Path.GetTempPath(), fileName);
+
+            File.WriteAllText(path, text);
         }
     }    
 }

@@ -59,7 +59,8 @@ namespace CivilPython.Installer
                 "-ExportSurfaceToXML",
                 "-ExportSurfaceTrianglesToXML",
                 "-CreatePropertySetDefinition",
-                "-AssignPropertySet"
+                "-AssignPropertySet",
+                "-BindAllInsert"
             };
 
             var sb = new StringBuilder();
