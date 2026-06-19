@@ -5,7 +5,7 @@
 	AutodeskProduct="AutoCAD"
 	ProductType="Application"
 	Name="CivilPython2025"
-	AppVersion="2.3.3"
+	AppVersion="2.3.4"
 	ProductCode="251148e4-42ac-4ad5-becc-480e68add43d"
 	UpgradeCode="e1aee694-7a1b-4138-adb9-b1b7e9f27004">	
 	
@@ -24,7 +24,7 @@
 	<Components>
 		<ComponentEntry 
 			AppName="CivilPython2025"
-			Version="2.3.3"
+			Version="2.3.4"
 			ModuleName="./Contents/win/CivilPython2025.dll"
 			AppDescription="CivilPython for Civil 3D"
 			LoadOnCommandInvocation="True" 
@@ -43,6 +43,7 @@
 <Command Local="-CreatePropertySetDefinition" Global="-CreatePropertySetDefinition" />
 <Command Local="-AssignPropertySet" Global="-AssignPropertySet" />
 <Command Local="-BindAllInsert" Global="-BindAllInsert" />
+<Command Local="-CreateTinSurface" Global="-CreateTinSurface" />
 </Commands>
 
 			

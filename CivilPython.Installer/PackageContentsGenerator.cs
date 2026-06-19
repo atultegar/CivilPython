@@ -13,7 +13,7 @@ namespace CivilPython.Installer
             string version,
             string productCode,
             string upgradeCode,
-            string appVersion = "2.3")
+            string appVersion = "2.3.4")
         {
             string bundleName = $"CivilPython{version}";
 
@@ -60,7 +60,8 @@ namespace CivilPython.Installer
                 "-ExportSurfaceTrianglesToXML",
                 "-CreatePropertySetDefinition",
                 "-AssignPropertySet",
-                "-BindAllInsert"
+                "-BindAllInsert",
+                "-CreateTinSurface"
             };
 
             var sb = new StringBuilder();
