@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ApplicationPackage
+	SchemaVersion="1.0"
+	AutodeskProduct="AutoCAD"
+	ProductType="Application"
+	Name="CivilPython2027"
+	AppVersion="2.3.4"
+	ProductCode="6299faf1-d1d3-47b2-ae4b-5d7fe98b4054"
+	UpgradeCode="2522ebad-1540-4f0a-8810-d08fa10b2bbe">	
+	
+	<CompanyDetails 
+		Name="" 
+		Phone=" " 
+		Url="" 
+		Email="" />
+	
+	<RuntimeRequirements
+		SeriesMin="R26.0"
+		SeriesMax="R26.0"
+		Platform="Civil3D"
+		OS="Win64" />
+		
+	<Components>
+		<ComponentEntry 
+			AppName="CivilPython2027"
+			Version="2.3.4"
+			ModuleName="./Contents/win/CivilPython2027.dll"
+			AppDescription="CivilPython for Civil 3D"
+			LoadOnCommandInvocation="True" 
+			LoadOnRequest="True">
+			
+			<Commands>
+<Command Local="Python" Global="Python" />
+<Command Local="-python" Global="-python" />
+<Command Local="-replacesolid" Global="-replacesolid" />
+<Command Local="-ExportLandFeatureLinesToXml" Global="-ExportLandFeatureLinesToXml" />
+<Command Local="-ExportCorridorFeatureLinesToXML" Global="-ExportCorridorFeatureLinesToXML" />
+<Command Local="-ExportSubassemblyShapesToXML" Global="-ExportSubassemblyShapesToXML" />
+<Command Local="-ExportSubassemblyLinksToXML" Global="-ExportSubassemblyLinksToXML" />
+<Command Local="-ExportSurfaceToXML" Global="-ExportSurfaceToXML" />
+<Command Local="-ExportSurfaceTrianglesToXML" Global="-ExportSurfaceTrianglesToXML" />
+<Command Local="-CreatePropertySetDefinition" Global="-CreatePropertySetDefinition" />
+<Command Local="-AssignPropertySet" Global="-AssignPropertySet" />
+<Command Local="-BindAllInsert" Global="-BindAllInsert" />
+<Command Local="-CreateTinSurface" Global="-CreateTinSurface" />
+</Commands>
+
+			
+		</ComponentEntry>
+		
+	</Components>
+	
+</ApplicationPackage>

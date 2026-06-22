@@ -18,7 +18,7 @@ REM ==========================================
 REM Build Versions
 REM ==========================================
 
-set versions=2023 2025 2026
+set versions=2027
 
 for %%V in (%versions%) do (
 
