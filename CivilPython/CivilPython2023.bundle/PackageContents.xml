@@ -5,7 +5,7 @@
 	AutodeskProduct="AutoCAD"
 	ProductType="Application"
 	Name="CivilPython2023"
-	AppVersion="2.3.4"
+	AppVersion="2.3.5"
 	ProductCode="c91b294e-fcdf-4b49-a1e6-f7a4472666ef"
 	UpgradeCode="f3eb1ecd-2b78-483f-8352-dafeb0a3afc5">	
 	
@@ -24,7 +24,7 @@
 	<Components>
 		<ComponentEntry 
 			AppName="CivilPython2023"
-			Version="2.3.4"
+			Version="2.3.5"
 			ModuleName="./Contents/win/CivilPython2023.dll"
 			AppDescription="CivilPython for Civil 3D"
 			LoadOnCommandInvocation="True" 

@@ -13,8 +13,6 @@ namespace CivilPython.Installer
 
             string sourceBundle = $@"..\CivilPython\{bundleName}";
 
-            var versionInt = Int32.Parse(version);
-
             var guids = GetGuids(version);
 
             PackageContentsGenerator.Generate(
@@ -22,23 +20,13 @@ namespace CivilPython.Installer
                 version,
                 guids.ProductGuid.ToString(),
                 guids.UpgradeGuid.ToString(),
-                appVersion: "2.3.4");
+                appVersion: "2.3.5");
 
-            string appDataFolder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-                "Autodesk", 
-                "ApplicationPlugins", 
-                bundleName);
-
-            string programDataFolder = $@"C:\ProgramData\Autodesk\ApplicationPlugins\{bundleName}";
-
-            string installDir = versionInt >= 2026
-                ? appDataFolder
-                : programDataFolder;
 
             var project = new Project(
                 $"CivilPython {version}",
-                new Dir(installDir,
+                new Dir(
+                    GetInstallDirectory(version),
                     new Files($@"{sourceBundle}\*.*"),
                     new DirFiles($@"{sourceBundle}\Contents\win\*.*")
                 )
@@ -58,7 +46,7 @@ namespace CivilPython.Installer
 
             project.ControlPanelInfo.Manufacturer = "Autodesk/BIMformative";
 
-            project.Version = new Version("2.3.4");
+            project.Version = new Version("2.3.5");
 
             project.MajorUpgrade = MajorUpgrade.Default;
 
@@ -127,5 +115,14 @@ namespace CivilPython.Installer
                 "Could not locate CivilPython.Installer.csproj from " + current);
         }
 
+        private static string GetInstallDirectory(string version)
+        {
+            int v = int.Parse(version);
+
+            if (v >= 2026)
+                return $@"%AppData%\Autodesk\ApplicationPlugins\CivilPython{version}.bundle";
+
+            return $@"%CommonAppDataFolder%\Autodesk\ApplicationPlugins\CivilPython{version}.bundle";
+        }
     }
 }
